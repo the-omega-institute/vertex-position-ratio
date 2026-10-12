@@ -1,0 +1,10 @@
+{"kind": "subcubic", "n": 1, "generation_options": ["-cq", "-D3", "1"]}
+{"kind": "subcubic", "n": 2, "generation_options": ["-cq", "-D3", "2"]}
+{"kind": "subcubic", "n": 3, "generation_options": ["-cq", "-D3", "3"]}
+{"kind": "subcubic", "n": 4, "generation_options": ["-cq", "-D3", "4"]}
+{"kind": "subcubic", "n": 5, "generation_options": ["-cq", "-D3", "5"]}
+{"kind": "subcubic", "n": 6, "generation_options": ["-cq", "-D3", "6"]}
+{"kind": "subcubic", "n": 7, "generation_options": ["-cq", "-D3", "7"]}
+{"kind": "subcubic", "n": 8, "generation_options": ["-cq", "-D3", "8"]}
+{"kind": "subcubic", "n": 9, "generation_options": ["-cq", "-D3", "9"]}
+{"kind": "subcubic", "n": 10, "generation_options": ["-cq", "-D3", "10"]}

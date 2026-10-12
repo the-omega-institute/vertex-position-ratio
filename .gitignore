@@ -1,0 +1,24 @@
+# Local dependency downloads, compiled tools, and PDF build products
+/tools/
+/tmp/
+__pycache__/
+*.py[cod]
+*.o
+.DS_Store
+
+# Uncompressed intermediate enumeration files; compressed data are included
+/data/cubic-*.g6
+/data/cubic-*.csv
+/data/connected-*.g6
+/data/connected-*.csv
+/data/subcubic-*.g6
+/data/subcubic-*.csv
+
+# LaTeX auxiliary files; note/note.pdf is included
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk

@@ -1,0 +1,317 @@
+[
+  {
+    "family": "original",
+    "m": 2,
+    "n": 39,
+    "max_degree": 5,
+    "sphere_radius": 5,
+    "selected_count": 2,
+    "root_geodesic_cover": 5
+  },
+  {
+    "family": "original",
+    "m": 3,
+    "n": 79,
+    "max_degree": 7,
+    "sphere_radius": 7,
+    "selected_count": 6,
+    "root_geodesic_cover": 7
+  },
+  {
+    "family": "original",
+    "m": 4,
+    "n": 133,
+    "max_degree": 9,
+    "sphere_radius": 9,
+    "selected_count": 12,
+    "root_geodesic_cover": 9
+  },
+  {
+    "family": "original",
+    "m": 5,
+    "n": 201,
+    "max_degree": 11,
+    "sphere_radius": 11,
+    "selected_count": 20,
+    "root_geodesic_cover": 11
+  },
+  {
+    "family": "original",
+    "m": 6,
+    "n": 283,
+    "max_degree": 13,
+    "sphere_radius": 13,
+    "selected_count": 30,
+    "root_geodesic_cover": 13
+  },
+  {
+    "family": "original",
+    "m": 7,
+    "n": 379,
+    "max_degree": 15,
+    "sphere_radius": 15,
+    "selected_count": 42,
+    "root_geodesic_cover": 15
+  },
+  {
+    "family": "original",
+    "m": 8,
+    "n": 489,
+    "max_degree": 17,
+    "sphere_radius": 17,
+    "selected_count": 56,
+    "root_geodesic_cover": 17
+  },
+  {
+    "family": "original",
+    "m": 9,
+    "n": 613,
+    "max_degree": 19,
+    "sphere_radius": 19,
+    "selected_count": 72,
+    "root_geodesic_cover": 19
+  },
+  {
+    "family": "original",
+    "m": 10,
+    "n": 751,
+    "max_degree": 21,
+    "sphere_radius": 21,
+    "selected_count": 90,
+    "root_geodesic_cover": 21
+  },
+  {
+    "family": "original",
+    "m": 11,
+    "n": 903,
+    "max_degree": 23,
+    "sphere_radius": 23,
+    "selected_count": 110,
+    "root_geodesic_cover": 23
+  },
+  {
+    "family": "original",
+    "m": 12,
+    "n": 1069,
+    "max_degree": 25,
+    "sphere_radius": 25,
+    "selected_count": 132,
+    "root_geodesic_cover": 25
+  },
+  {
+    "family": "subcubic",
+    "m": 2,
+    "n": 121,
+    "max_degree": 3,
+    "sphere_radius": 22,
+    "selected_count": 4,
+    "root_geodesic_cover": 8
+  },
+  {
+    "family": "subcubic",
+    "m": 3,
+    "n": 256,
+    "max_degree": 3,
+    "sphere_radius": 37,
+    "selected_count": 9,
+    "root_geodesic_cover": 8
+  },
+  {
+    "family": "subcubic",
+    "m": 4,
+    "n": 487,
+    "max_degree": 3,
+    "sphere_radius": 56,
+    "selected_count": 16,
+    "root_geodesic_cover": 16
+  },
+  {
+    "family": "subcubic",
+    "m": 5,
+    "n": 800,
+    "max_degree": 3,
+    "sphere_radius": 79,
+    "selected_count": 25,
+    "root_geodesic_cover": 16
+  },
+  {
+    "family": "subcubic",
+    "m": 6,
+    "n": 1229,
+    "max_degree": 3,
+    "sphere_radius": 106,
+    "selected_count": 36,
+    "root_geodesic_cover": 16
+  },
+  {
+    "family": "subcubic",
+    "m": 7,
+    "n": 1792,
+    "max_degree": 3,
+    "sphere_radius": 137,
+    "selected_count": 49,
+    "root_geodesic_cover": 16
+  },
+  {
+    "family": "subcubic",
+    "m": 8,
+    "n": 2539,
+    "max_degree": 3,
+    "sphere_radius": 172,
+    "selected_count": 64,
+    "root_geodesic_cover": 32
+  },
+  {
+    "family": "subcubic",
+    "m": 9,
+    "n": 3424,
+    "max_degree": 3,
+    "sphere_radius": 211,
+    "selected_count": 81,
+    "root_geodesic_cover": 32
+  },
+  {
+    "family": "subcubic",
+    "m": 10,
+    "n": 4497,
+    "max_degree": 3,
+    "sphere_radius": 254,
+    "selected_count": 100,
+    "root_geodesic_cover": 32
+  },
+  {
+    "family": "subcubic",
+    "m": 11,
+    "n": 5776,
+    "max_degree": 3,
+    "sphere_radius": 301,
+    "selected_count": 121,
+    "root_geodesic_cover": 32
+  },
+  {
+    "family": "subcubic",
+    "m": 12,
+    "n": 7279,
+    "max_degree": 3,
+    "sphere_radius": 352,
+    "selected_count": 144,
+    "root_geodesic_cover": 32
+  },
+  {
+    "family": "cubic",
+    "m": 2,
+    "n": 274,
+    "max_degree": 3,
+    "sphere_radius": 22,
+    "selected_count": 4,
+    "root_geodesic_cover": 24
+  },
+  {
+    "family": "cubic",
+    "m": 3,
+    "n": 544,
+    "max_degree": 3,
+    "sphere_radius": 37,
+    "selected_count": 9,
+    "root_geodesic_cover": 24
+  },
+  {
+    "family": "cubic",
+    "m": 4,
+    "n": 1038,
+    "max_degree": 3,
+    "sphere_radius": 56,
+    "selected_count": 16,
+    "root_geodesic_cover": 48
+  },
+  {
+    "family": "cubic",
+    "m": 5,
+    "n": 1664,
+    "max_degree": 3,
+    "sphere_radius": 79,
+    "selected_count": 25,
+    "root_geodesic_cover": 48
+  },
+  {
+    "family": "cubic",
+    "m": 6,
+    "n": 2522,
+    "max_degree": 3,
+    "sphere_radius": 106,
+    "selected_count": 36,
+    "root_geodesic_cover": 48
+  },
+  {
+    "family": "cubic",
+    "m": 7,
+    "n": 3648,
+    "max_degree": 3,
+    "sphere_radius": 137,
+    "selected_count": 49,
+    "root_geodesic_cover": 48
+  },
+  {
+    "family": "cubic",
+    "m": 8,
+    "n": 5206,
+    "max_degree": 3,
+    "sphere_radius": 172,
+    "selected_count": 64,
+    "root_geodesic_cover": 96
+  },
+  {
+    "family": "cubic",
+    "m": 9,
+    "n": 6976,
+    "max_degree": 3,
+    "sphere_radius": 211,
+    "selected_count": 81,
+    "root_geodesic_cover": 96
+  },
+  {
+    "family": "cubic",
+    "m": 10,
+    "n": 9122,
+    "max_degree": 3,
+    "sphere_radius": 254,
+    "selected_count": 100,
+    "root_geodesic_cover": 96
+  },
+  {
+    "family": "cubic",
+    "m": 11,
+    "n": 11680,
+    "max_degree": 3,
+    "sphere_radius": 301,
+    "selected_count": 121,
+    "root_geodesic_cover": 96
+  },
+  {
+    "family": "cubic",
+    "m": 12,
+    "n": 14686,
+    "max_degree": 3,
+    "sphere_radius": 352,
+    "selected_count": 144,
+    "root_geodesic_cover": 96
+  },
+  {
+    "family": "cubic",
+    "m": 20,
+    "n": 59438,
+    "max_degree": 3,
+    "sphere_radius": 904,
+    "selected_count": 400,
+    "root_geodesic_cover": 192
+  },
+  {
+    "family": "cubic",
+    "m": 40,
+    "n": 427670,
+    "max_degree": 3,
+    "sphere_radius": 3404,
+    "selected_count": 1600,
+    "root_geodesic_cover": 384
+  }
+]

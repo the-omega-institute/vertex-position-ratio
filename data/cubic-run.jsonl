@@ -1,0 +1,9 @@
+{"kind": "cubic", "n": 4, "generation_options": ["-cq", "-d3", "-D3", "4"]}
+{"kind": "cubic", "n": 6, "generation_options": ["-cq", "-d3", "-D3", "6"]}
+{"kind": "cubic", "n": 8, "generation_options": ["-cq", "-d3", "-D3", "8"]}
+{"kind": "cubic", "n": 10, "generation_options": ["-cq", "-d3", "-D3", "10"]}
+{"kind": "cubic", "n": 12, "generation_options": ["-cq", "-d3", "-D3", "12"]}
+{"kind": "cubic", "n": 14, "generation_options": ["-cq", "-d3", "-D3", "14"]}
+{"kind": "cubic", "n": 16, "generation_options": ["-cq", "-d3", "-D3", "16"]}
+{"kind": "cubic", "n": 18, "generation_options": ["-cq", "-d3", "-D3", "18"]}
+{"kind": "cubic", "n": 20, "generation_options": ["-cq", "-d3", "-D3", "20"]}

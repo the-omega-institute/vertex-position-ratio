@@ -1,552 +1,725 @@
 \documentclass[11pt]{article}
-\usepackage[a4paper,margin=25mm]{geometry}
-\usepackage{amsmath,amssymb,amsthm,booktabs,array,microtype}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\usepackage{microtype}
+\hypersetup{pdftitle={Sharp growth of vertex-position ratios and realizable pairs},
+pdfauthor={Haobo Ma; Wenlin Zhang}}
 \newtheorem{theorem}{Theorem}
-\newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
 \newcommand{\vp}{\operatorname{vp}}
-\newcommand{\pmv}{\operatorname{mv}}
-\newcommand{\pmp}{\operatorname{mp}_{\mathrm{loc}}}
-\newcommand{\dist}{d}
-\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\vpm}{\operatorname{vp}^{-}}
+\newcommand{\dist}{\operatorname{dist}}
 \newcommand{\diam}{\operatorname{diam}}
-\title{Unbounded vertex-position ratios in cubic graphs and local position problems}
-\author{Haobo Ma\\{\small ChronoAI Pte Ltd; The Omega Institute}
-\\[0.6em]Wenlin Zhang\\{\small National University of Singapore; The Omega Institute}}
-\date{12 October 2026}
+\newcommand{\vv}{\operatorname{vv}}
+\newcommand{\vvm}{\operatorname{vv}^{-}}
+\newcommand{\Z}{\mathbb Z}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\title{Sharp growth of vertex-position ratios\newline and realizable pairs}
+\author{Haobo Ma\\\small ChronoAI Pte Ltd; The Omega Institute
+\and Wenlin Zhang\\\small National University of Singapore; The Omega Institute}
+\date{13 October 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-We prove that the ratio of the upper to lower vertex-position number is
-unbounded even among connected cubic graphs. A family of order $O(m^3)$ has
-upper vertex-position number at least $m^2$ and lower vertex-position number
-at most $O(m)$; the construction uses staggered connections between rooted
-geodesic paths. The corresponding ratios for local monophonic position and
-local mutual visibility are also unbounded. We realize every integer pair
-$(a,b)$ with $a\ge2$ and $a\le b\le3a-1$, and settle the case $a=1$.
-An exhaustive computation covers all 556,471 connected cubic graphs through
-20 vertices, all connected graphs through nine vertices, and all connected
-graphs of maximum degree at most three through ten vertices.
+We prove that the largest ratio of the upper to lower vertex-position number
+among connected cubic graphs of order $n$ is $\Theta(n/\log n)$, for all
+sufficiently large even $n$. For connected graphs of maximum degree exactly
+$\Delta$, the corresponding maximum is $\Theta(n/(\Delta+\log n))$, uniformly
+for $3\le\Delta\le n-1$. The proof extends a shortest-path-cover argument to
+geodesic antichains and constructs cubic graphs with linearly many incomparable
+vertices and logarithmically many root geodesics covering the graph. We also
+classify all pairs $(\vpm,\vp)$ with lower parameter at most two: they are
+$(1,1),(1,2)$ and $(2,b)$ for $2\le b\le10$; the largest upper parameter in
+row $a$ grows exponentially in $a$. Finally, vertex-visibility ratios grow
+linearly along a cubic family, and local monophonic-position ratios are
+unbounded.
 \end{abstract}
 
-\section{Definitions and the three questions}
-Graphs are finite, simple, undirected and connected. Following
-Thankachy et al.\ \cite[Definition 2.1]{vp}, an \emph{$x$-position set} is a
-set $S\subseteq V(G)$ such that no member of $S\setminus\{v\}$ lies on
-any shortest $x,v$-path, for each $v\in S$. Write $p_x(G)$ for its maximum
-cardinality, and
+\section{Vertex position and the main results}
+All graphs are finite, simple, undirected and connected. Following
+Thankachy et al.\ \cite{position}, an $x$-position set is a set $S\subseteq V(G)$
+such that, for each $v\in S$, no vertex of $S\setminus\{v\}$ lies on any
+shortest $x,v$-path. Write $p_x(G)$ for its maximum size, and put
 \[
- \vp^-(G)=\min_x p_x(G),\qquad \vp(G)=\max_x p_x(G).
+ a=\vpm(G)=\min_xp_x(G),\qquad b=\vp(G)=\max_xp_x(G),\qquad \rho(G)=b/a.
 \]
-The observer $x$ cannot belong to an $x$-position set of size at least two.
-For nontrivial connected graphs, maximum sets can therefore be taken in
-$V(G)\setminus\{x\}$; $p_x(K_1)=1$.
+For $|V(G)|\ge2$ a maximum set can be chosen to exclude $x$; a set containing
+$x$ has size at most one. We use $p_x(K_1)=1$.
 
-Problem 2.4 of \cite{vp} asks whether $\vp(G)/\vp^-(G)$ is bounded over
-connected graphs. Section~\ref{sec:original} supplies the full proof of our
-original negative answer. James Tuite subsequently asked about bounded
-degree, local monophonic position and mutual visibility, and realizable
-pairs $(\vp^-,\vp)$ (private communication, 11 October 2026). We answer these
-questions in Sections~\ref{sec:cubic}--\ref{sec:pairs}. The bounded-degree
-question has a sharp qualitative answer: the ratio is bounded for maximum
-degree at most two and unbounded for maximum degree at most any fixed
-$\Delta\ge3$, including the cubic class. The two local variants are
-unbounded. The pair classification remains partial beyond our stated
-realization region and finite witnesses.
+Problem 2.4 of \cite{position} asks whether $\rho$ is bounded over connected
+graphs. James Tuite asked in addition about bounded degree, local path
+variants, and realizable pairs (private communication, 11 October 2026).
+The following results give the sharp order of growth and settle the first
+two rows of the pair problem. All logarithms in estimates below have base two.
 
-As Tuite pointed out, trees are already settled in \cite[Corollary 3.6]{vp}. For a tree $T$ on at
-least three vertices with $\ell$ leaves,
+\begin{theorem}\label{thm:main}
+There are absolute positive constants bounding the following maxima above
+and below by constant multiples of the displayed quantities:
 \[
- p_x(T)=\begin{cases}\ell-1&x\text{ a leaf},\\\ell&x\text{ otherwise},\end{cases}
- \qquad \frac{\vp(T)}{\vp^-(T)}=\frac{\ell}{\ell-1}\le2.
+\begin{array}{ll}
+\displaystyle\max_{|V(G)|=n,\ G\text{ cubic}}\rho(G)
+   &\displaystyle=\Theta\!\left(\frac n{\log n}\right),\quad n\text{ even and sufficiently large},\\[6pt]
+\displaystyle\max_{|V(G)|=n,\ \Delta(G)\le\Delta}\rho(G)
+   &\displaystyle=\Theta\!\left(\frac n{\log n}\right),\quad \Delta\ge3,\ n\text{ sufficiently large},\\[6pt]
+\displaystyle\max_{|V(G)|=n,\ \Delta(G)=\Delta}\rho(G)
+   &\displaystyle=\Theta\!\left(\frac n{\Delta+\log n}\right),\quad 3\le\Delta\le n-1.
+\end{array}
 \]
-Thus a new tree enumeration cannot address unboundedness. The exceptions
-$K_1,K_2$ both have ratio one. The survey \cite[Sections 3.3 and 4.1]{survey}
-places vertex position and monophonic position in their broader setting.
-
-Two elementary facts will be used repeatedly. A sphere about $x$ is an
-$x$-position set, since distances strictly increase along an $x$-geodesic.
-If $V(G)$ is covered by $q$ geodesics starting at $y$, then $p_y(G)\le q$:
-two chosen vertices on the same geodesic violate the definition. Also, an
-integer function $f$ satisfying $|f(u)-f(v)|\le1$ on every edge gives
-$\dist(u,v)\ge |f(u)-f(v)|$, by summing along a path.
-
-\section{The original unboundedness construction}\label{sec:original}
-Fix $m\ge2$. Start with a vertex $y$ and $2m+1$ otherwise disjoint paths
-from $y$: $H$ and $P_1,\ldots,P_m$ of length $4m$, and $Q_j$ of length
-$a_j=2m+2j$, for $1\le j\le m$. Write $H_t,P_{i,t},Q_{j,t}$ for their
-vertices at level $t$, with all level-zero vertices identified as $y$.
-Put $b_j=2m+j+1$, and add precisely the edges
+In the last line the constants and the threshold for $n$ are independent of
+$\Delta$. If $a\le2$, the realizable pairs $(a,b)$ are exactly
 \[
- H_{b_j}Q_{j,b_j},\qquad Q_{j,a_j}P_{i,a_j}
- \quad(1\le i,j\le m).
+ (1,1),\quad(1,2),\quad(2,2),(2,3),\ldots,(2,10).
 \]
-Call the resulting graph $G_m$, and put $x=H_{4m}$.
+For every $a\ge2$, the maximum $B(a)=\max\{\vp(G):\vpm(G)=a\}$ exists and satisfies
+\begin{equation}\label{eq:Ba}
+ 2^{a-1}\le B(a)\le(2a+1)4^a.
+\end{equation}
+\end{theorem}
 
-\begin{proposition}\label{prop:original}
-For $m\ge2$, the graph $G_m$ has order $7m^2+5m+1$ and satisfies
+For maximum degree at most two, paths and cycles give a maximum ratio of two
+once $n\ge3$. Trees have ratio at most two: if a tree has $\ell\ge2$ leaves,
+then $p_x=\ell-1$ at a leaf and $p_x=\ell$ elsewhere, apart from $K_2$
+\cite[Corollary 3.6]{position}. The constructions below therefore require
+cycles even though their low-degree branching comes from trees.
+
+\section{An upper bound from geodesic covers}
+Fix $x$ and define the geodesic order on $V(G)\setminus\{x\}$ by
 \[
- p_y(G_m)=2m+1,\quad \vp^-(G_m)\le2m+1,
- \quad \vp(G_m)\ge m(m-1).
+ u\preceq_x v\quad\Longleftrightarrow\quad d(x,u)+d(u,v)=d(x,v).
 \]
-Consequently $\vp(G_m)/\vp^-(G_m)\ge m(m-1)/(2m+1)$.
-\end{proposition}
-\begin{proof}
-Every edge changes the level by at most one. Hence each ray is a
-$y$-geodesic, and the level of a vertex is its distance from $y$.
-The added edges preserve level, so no $y$-geodesic can use them: a path
-to level $t$ of length $t$ must increase level at every step. Thus every
-vertex has a unique $y$-geodesic, along its own ray. This gives
-$p_y\le2m+1$, with equality by choosing the final vertex of each ray.
+The triangle inequality proves transitivity, and strict order increases
+distance from $x$, so this is a partial order. Its antichains are exactly
+the observer-excluding $x$-position sets. A sphere about $x$ is one such set.
 
-Let $M=2m+1$. Define $f(y)=M$ and, for positive indices,
-\begin{align*}
- f(H_t)&=\min\{M,4m-t\},\\
- f(P_{i,t})&=2m+(t\bmod2),\\
- f(Q_{j,t})&=\min\{M,\max\{4m+1-t,t-(2j+1)\}\}.
-\end{align*}
-These functions change by at most one on ray edges, including those
-incident with $y$. At the first kind of added edge the values are
-$2m-j-1$ and $2m-j$; at the second kind they are $2m-1$ and $2m$.
-Thus $f$ is 1-Lipschitz on every edge, and $f(x)=0$.
-
-For $1\le i\le m$ and $1\le j<m$, put $z_{i,j}=P_{i,a_j+1}$.
-Then $f(z_{i,j})=M$, giving $\dist(x,z_{i,j})\ge M$.
-The path going down $H$ to $H_{b_j}$, crossing to $Q_j$, going up
-to $Q_{j,a_j}$, crossing to $P_i$, and taking one more step has length
-\[
- (4m-b_j)+1+(a_j-b_j)+1+1=2m+1.
-\]
-The $m(m-1)$ distinct vertices $z_{i,j}$ therefore lie on the sphere
-of radius $M$ about $x$. The sphere observation proves the lower bound.
-The order follows by summing the ray lengths and adding $y$.
-\end{proof}
-
-This proves the negative answer to Problem 2.4. The
-\href{https://github.com/the-omega-institute/trureturing/blob/9cba9d04fef654e1e09d10813836d884854c0b3f/D5/S3/Combinatorics/PositionSets/VertexPositionRatioRefutation.lean}{frozen Lean source}
-formalizes this original family and the two global bounds. The results
-below are proved here and are not asserted to have been formalized.
-
-\section{Maximum degree three and cubic graphs}\label{sec:cubic}
-We replace the common hub by a binary tree and replace each multiway
-connection at $Q_j$ by connections at successive levels. The target
-sphere survives because its chosen level compensates for this staggering.
-
-Let $m\ge2$, put $c=m+1$, and set
-\[
- L=2c(m+2),\quad R=L+1-2c,\quad M=R+c,\quad
- a_j=2c(j+1),\quad b_j=c(j+2).
-\]
-Let $k$ be the least power of two with $k\ge2m+1$. Take a full binary
-tree of depth $h=\log_2 k$, rooted at $y$. At $2m+1$ distinct leaves
-attach rays $H,P_1,\ldots,P_m,Q_1,\ldots,Q_m$, each indexed from
-$t=1$ beyond its tree leaf. The $H$ and $P_i$ rays have length $L$,
-and $Q_j$ has length $a_j+m$. The other tree leaves have no attached ray.
-Add the edges
-\[
- H_{b_j}Q_{j,b_j},\qquad
- Q_{j,a_j+i-1}P_{i,a_j+i}\quad(1\le i,j\le m).
-\]
-Denote this graph by $B_m$ and put $x=H_L$.
-
-\begin{lemma}\label{lem:subcubic}
-The graph $B_m$ is connected, has maximum degree three, and has
-\[
- N_m=3m^3+13m^2+13m+3+2k
-\]
-vertices. It satisfies $p_y(B_m)=k$ and
-\[
- \dist(x,P_{i,a_j+c})=M\quad(1\le i,j\le m).
-\]
-In particular $\vp(B_m)\ge m^2$.
+\begin{lemma}\label{lem:rootcover}
+If $p_y(G)=k$, then $V(G)$ is covered by $k$ geodesics starting at $y$.
+Conversely, a cover by $k$ such geodesics implies $p_y(G)\le k$.
 \end{lemma}
 \begin{proof}
-Tree vertices have degree at most three. All added edges have distinct
-endpoints on each individual ray: the first $Q_j$ exit is at $a_j>b_j$,
-successive exits are one level apart, and exits on a fixed $P_i$ are
-$2c$ levels apart. Each such endpoint was an interior degree-two
-vertex and receives one edge. Ray endpoints remain leaves.
-
-Give tree vertices their depth and ray vertices level $h+t$.
-Each added edge changes level by zero or one, so every original
-root-to-leaf path, including its attached ray, remains geodesic.
-These $k$ paths cover all vertices. They give $p_y\le k$, and the
-$k$ leaves of $B_m$ give equality: a leaf cannot be internal to a path
-ending at a different leaf.
-
-Define $f=M$ on the binary tree, and on the rays define
-\begin{align*}
- f(H_t)&=\min\{M,L-t\},\\
- f(P_{i,t})&=\min\{M,R+i+\min_{1\le q\le m}|t-(a_q+i)|\},\\
- f(Q_{j,t})&=\min\{M,\max\{L+1-t,t-a_j+R\}\}.
-\end{align*}
-Each ray function is 1-Lipschitz. At its first vertex it equals $M$:
-for $H$ and $Q_j$ this follows from $L-M=c-1\ge2$, and for $P_i$
-from $a_1=4c$. Thus edges to the tree also satisfy the required bound.
-The identity
-\[
- 2b_j=L+1+a_j-R
-\]
-shows that the values at $H_{b_j},Q_{j,b_j}$ are the truncations at
-$M$ of $L-b_j,L+1-b_j$. At the other added edge, the values at
-$Q_{j,a_j+i-1}$ and $P_{i,a_j+i}$ are respectively $R+i-1,R+i$.
-Indeed $a_j\ge4c$ makes the increasing term in the $Q_j$ maximum
-dominant there, and $i\le m<c$ prevents truncation. Hence $f$ is
-1-Lipschitz on all edges, and $f(x)=0$.
-
-At $z_{i,j}=P_{i,a_j+c}$, the nearest point of
-$\{a_q+i:1\le q\le m\}$ is $a_j+i$; its distance is $c-i$.
-This remains true for $j=m$. Therefore $f(z_{i,j})=M$.
-For the reverse inequality, follow $H$ down to $b_j$, cross to $Q_j$,
-go up to $a_j+i-1$, cross to $P_i$, and go up to $a_j+c$.
-The length is
-\[
- (L-b_j)+1+(a_j+i-1-b_j)+1+(c-i)=R+c=M.
-\]
-All indices lie on the specified rays: $b_j\le L/2<L$,
-$b_j<a_j$, $a_j+i-1<a_j+m$, and $a_j+i\le a_j+c\le L-c<L$.
-The $m^2$ distinct targets form an $x$-position set. Finally,
-\[
- |V(B_m)|=(2k-1)+(m+1)L+\sum_{j=1}^m(a_j+m)=N_m.
-\]
+Dilworth's theorem \cite{dilworth} partitions the nonroot vertices into $k$
+chains. For a chain $v_1\prec_y\cdots\prec_y v_s$, concatenate a shortest
+$y,v_1$-path and shortest paths between successive chain vertices. The total
+length telescopes to $d(y,v_s)$, so the concatenation is a geodesic containing
+the chain. Conversely, a position set meets each rooted geodesic in at most
+one vertex.
 \end{proof}
 
-We now make every degree equal to three. Take two copies of $B_m$, writing
-$v^0,v^1$ for a vertex and its copy. At every degree-two vertex add
-$v^0v^1$. At every degree-one vertex $u$, add four new vertices
-$c_0,c_1,c_2,c_3$ in a cycle in that order; join $u^0$ to $c_0,c_1$
-and $u^1$ to $c_2,c_3$. Different leaves receive disjoint cycles.
-No edges are added at degree-three vertices. Call the resulting graph
-$C_m$. The root of $B_m$ has degree two, so $y^0y^1$ is present.
+We need a bound on all antichains, including those occupying several spheres.
+The following proof gives the endpointwise extension of the vertex-cover
+construction of Dumas--Foucaud--Perez--Todinca
+\cite[Section 4, proof of Lemma 8]{cover}. Their recursion bounds spheres;
+the final slack argument below replaces the equal-radius condition.
 
-\begin{theorem}\label{thm:cubic}
-For every $m\ge2$, $C_m$ is a connected cubic graph of order
-$2N_m+4k$ and satisfies
+\begin{lemma}\label{lem:coverbound}
+If $V(G)$ is covered by $k$ isometric paths, then
 \[
- \vp^-(C_m)\le3k,\qquad \vp(C_m)\ge m^2,
- \qquad \frac{\vp(C_m)}{\vp^-(C_m)}\ge\frac{m^2}{3k}.
+ p_x(G)\le(2k+1)4^k\qquad\text{for every }x.
 \]
-The ratio is unbounded among connected cubic graphs. These examples
-have ratio $\Omega(|V(C_m)|^{1/3})$.
-\end{theorem}
+\end{lemma}
 \begin{proof}
-Every old or new vertex has degree three, and $y^0y^1$ connects the
-two copies. There are $k$ degree-one vertices in $B_m$, giving the
-asserted order. Collapse the two copies to $B_m$ and each attached
-four-cycle to its corresponding leaf. Every edge projects to an edge
-or a stationary step. Consequently distances between vertices in
-copy zero cannot decrease, and the embedded copy provides equality.
-The $m^2$ targets from Lemma~\ref{lem:subcubic}, in copy zero, are
-still on the sphere of radius $M$ about $x^0$.
+Orient the covering paths $\mu_1,\ldots,\mu_k$ and call their indices colors.
+A vertex may receive the color of any base path containing it. Call a colored
+walk good if each color occurs in one block, following its base path
+monotonically. Every pair of vertices has a good shortest path: among colored
+shortest paths minimize the number of blocks; if a color occurs twice,
+replace the intervening part by the isometric base segment and color it
+uniformly, contradicting minimality. A block has sign $+$ or $-$ according
+to its direction; assign $+$ to a singleton block.
 
-Write $\lambda(v)=\dist_{B_m}(y,v)$. In $C_m$,
+Take good shortest $x,v$-paths for $v$ in an $x$-position set $S$. We describe
+the recursive grouping used in \cite{cover}, recording lengths separately
+for each endpoint. At each node there is one current good walk to each
+endpoint in its group. Stop if all these walks are colored prefixes of one
+of them. Initially let $C$ be the colors assigned to $x$. In each walk take
+the last vertex $w$ colored in $C$, of color $c$, and replace the prefix to
+$w$ by $\mu_c[x,w]$. Group the resulting walks by $(c,\text{sign})$.
+This first replacement does not increase length.
+
+At a subsequent nonterminal node, take a longest colored prefix $R$ such that
+every walk either extends $R$ or is a prefix of $R$. Let $z$ be its last vertex
+and set aside the walks ending within $R$. Call the others unfinished.
+Let $C$ be the colors immediately after $z$. In each unfinished
+walk take the last vertex $w$ whose color $c$ lies in $C$. Replace its part
+after $z$ through $w$ by one edge from $z$ to a vertex $u$ of $\mu_c$, followed
+by $\mu_c[u,w]$. If $z\in\mu_c$, take $u$ toward $w$ along that path.
+Otherwise choose the first neighbor of $z$ in the fixed orientation of
+$\mu_c$. Such a neighbor exists because $c\in C$.
+Group by the color and direction of this replacement. If the new block is
+a singleton and the color of $z$ is also $c$, use the direction of $zu$.
+Assign the previously ended prefixes to any one nonempty group.
+
+Here are the invariants that control this recursion. The last-occurrence
+choice removes all other colors in $C$ from the continuing suffix. If $c$
+occurred in the retained prefix, it was its last color, so the replacement
+still has one monotone block of each color. Walks in the same group have the
+same successor of $z$. Thus their retained prefix advances at the next
+nonterminal node. After the first grouping, the active suffixes have a common
+initial color and direction. At a split with $|C|\ge2$, the chosen child loses
+all colors of $C$ except its chosen color. At a split with $C=\{c\}$, the
+previous initial color is different from $c$: otherwise all continuing walks
+would share the next base-path edge, contrary to maximality of the common
+prefix. That previous color has been passed and cannot recur. Consequently
+the union of available suffix colors strictly decreases at every subsequent
+split. There are at most $k$ grouping steps from the root to a terminal node.
+
+Children have distinct labels in the alphabet of $2k$ color--sign pairs.
+In any child, all the other sibling labels are forbidden in its descendants:
+the other colors have been removed; the opposite sign of its own color
+cannot recur in a good walk. These statements also hold for ended prefixes,
+which are carried unchanged and never create a branch.
+
+Every replacement adds at most two edges. This is immediate if $z\in\mu_c$.
+Otherwise isometry gives
 \[
- \dist(y^0,v^0)=\lambda(v),\qquad
- \dist(y^0,v^1)=\lambda(v)+1.
+ |\mu_c[u,w]|=d(u,w)\le1+|W[z,w]|,
+ \qquad 1+|\mu_c[u,w]|\le |W[z,w]|+2,
 \]
-For the second equality, the root edge followed by a copy-one
-geodesic gives the upper bound. Any path to copy one either uses a
-copy-switching edge, which projects to a stationary step, or switches
-via a leaf cycle, whose projected portion is stationary and has at
-least three edges. Thus its length exceeds its projected length by
-at least one, giving the lower bound.
+where $W$ is the walk being modified. Thus at recursion depth $j$ the walk
+to endpoint $v$ has length at most $d(x,v)+2j$. This estimate uses no common
+endpoint radius. It is also valid if replacement walks repeat vertices:
+the coloring refers to occurrences and the retained-prefix argument applies
+to walks.
 
-For a leaf $u$ with $\lambda(u)=\ell$, its cycle vertices
-$c_0,c_1,c_2,c_3$ have distances $\ell+1,\ell+1,\ell+2,\ell+2$
-from $y^0$. The cycle is accessible only through $u^0,u^1$, so these
-distances follow from the preceding equalities. For each of the $k$
-original root-to-leaf geodesics $P$, use three $y^0$-geodesics:
-its copy-zero version extended through $c_0,c_3$, its copy-zero
-version extended through $c_1,c_2$, and $y^0y^1$ followed by its
-copy-one version. These $3k$ geodesics cover $V(C_m)$.
-Thus $p_{y^0}(C_m)\le3k$.
+The number of terminal groups is at most $4^k$. More generally, with $q$
+available labels there are at most $2^q$ terminal descendants. Induct on the
+remaining tree height. At a node with $t\ge2$ children each child has at most
+$q-t+1$ available labels, and
+\[
+ t\,2^{q-t+1}\le2^q.
+\]
+A unary node preserves the bound. Initially $q=2k$.
 
-As $k<2(2m+1)$, the displayed ratio exceeds
-$m^2/(6(2m+1))$, which tends to infinity. Also $|V(C_m)|=O(m^3)$,
-giving the order-dependent lower growth bound along this family.
+In one terminal group all endpoint walks are prefixes of a common walk $W$.
+Write $\ell_v$ for the prefix length and $e_v=\ell_v-d(x,v)$ for its slack.
+Then $0\le e_v\le2k$. If $u$ precedes $v$ on $W$, the triangle inequality
+gives $e_u\le e_v$. If equality holds, then
+\[
+ d(x,v)-d(x,u)=\ell_v-\ell_u\ge d(u,v)
+                         \ge d(x,v)-d(x,u),
+\]
+so $u\preceq_x v$, contrary to the antichain condition. The integer slacks
+therefore strictly increase along the endpoints. Each terminal group has
+at most $2k+1$ endpoints, proving the result.
 \end{proof}
 
-For maximum degree at most two, a nontrivial connected graph is a path
-or cycle. A path of order at least three has ratio two, and a cycle
-has $p_x=2$ at every vertex \cite[Corollaries 2.7 and 4.2]{vp}.
-Thus the maximum ratio in that class is two. Cubic graphs belong to
-every class with maximum degree at most $\Delta\ge3$, proving
-unboundedness there. If maximum degree \emph{exactly} $\Delta>3$ is
-required, attach $\Delta-3$ leaves at $y^0$ in $C_m$. The old distances
-are preserved and the root geodesic cover increases by $\Delta-3$,
-so the ratio is at least $m^2/(3k+\Delta-3)$ and is unbounded
-for each fixed $\Delta$ with that convention.
-
-Useful finite-order upper bounds follow from \cite[Lemmas 2.5, 2.6,
-2.10 and Theorem 2.9]{vp}. If $n\ge2$, minimum degree is $\delta$,
-maximum degree is $\Delta$, radius is $r$ and diameter is $D$, then
-\begin{equation}\label{eq:upper}
- \frac{\vp(G)}{\vp^-(G)}\le
- \frac{n-r}{\max\{1,\delta,\lceil(\Delta+1)/3\rceil,
-                         \lceil(n-1)/D\rceil\}}.
+\begin{corollary}\label{cor:upper}
+Every connected graph of order $n\ge2$ satisfies
+\begin{equation}\label{eq:universal}
+ b\le(2a+1)4^a,\qquad \rho(G)\le\frac{4n}{\log n}.
 \end{equation}
-For bipartite graphs, $\lceil\Delta/2\rceil$ can replace
-$\lceil(\Delta+1)/3\rceil$; if $r\ge3$, the numerator can be improved
-to $n-r-1$ by \cite[Theorem 2.11]{vp}. In particular the denominator
-for cubic graphs is at least $\max\{3,\lceil(n-1)/D\rceil\}$.
-The asymptotic maximum as a function of cubic order remains open:
-our lower bound is of order $n^{1/3}$ along the displayed family,
-whereas these general upper bounds can be linear in $n$.
-
-\section{Local monophonic position and local mutual visibility}\label{sec:local}
-For these observer-excluding local variants, assume $|V(G)|\ge2$.
-We state the localization explicitly, retaining the different path
-quantifiers in the defining papers. A monophonic path is an induced
-path. A monophonic position set has no three vertices on any induced
-path \cite[Definition 2.2]{mp}; the survey discusses this in
-Section 4.1 \cite{survey}.
-For a fixed observer $x$, call $S\subseteq V(G)\setminus\{x\}$ a
-\emph{local monophonic position set} if, for each $v\in S$, no induced
-$x,v$-path contains another member of $S$. Denote its maximum size
-by $m_x(G)$, and put $\pmp^-(G)=\min_x m_x(G)$ and
-$\pmp^+(G)=\max_x m_x(G)$.
-
-Di Stefano's mutual visibility condition requires the \emph{existence}
-of a shortest path avoiding the other selected vertices
-\cite[Section 2]{mv}.
-Its local version is: for each $v\in S\subseteq V(G)\setminus\{x\}$,
-there exists a shortest $x,v$-path whose internal vertices avoid $S$.
-Write $q_x(G)$ for its maximum size, $\pmv^-(G)=\min_x q_x(G)$ and
-$\pmv^+(G)=\max_x q_x(G)$. We do not additionally require visibility
-between two members of $S$; that would retain the global condition
-instead of localizing it. These minus signs refer to minima over
-observers, not to minimum sizes of maximal sets.
-
-\begin{proposition}\label{prop:local}
-Both $\pmp^+/\pmp^-$ and $\pmv^+/\pmv^-$ are unbounded over connected
-graphs. For the fan $F_n=K_1\vee P_n$, $n\ge2$,
+\end{corollary}
+\begin{proof}
+Choose $y$ with $p_y=a$ and apply Lemmas~\ref{lem:rootcover} and
+\ref{lem:coverbound}. Hence
 \[
- \pmp^-(F_n)=2,\qquad \pmp^+(F_n)=n.
+ \rho\le\min\{(n-1)/a,\,3\cdot4^a\}.
 \]
-For the original graph $G_m$,
+For $a\ge\frac14\log n$ use the first term. Otherwise the second is less than
+$3\sqrt n\le4n/\log n$. The last inequality follows, for example, by maximizing
+$(\log_2 t)/\sqrt t$ over positive real $t$, whose maximum is $2/(e\ln2)<4/3$.
+\end{proof}
+
+\section{Cubic graphs attaining the growth order}
+We first build a subcubic graph with many incomparable targets. Its dyadic
+part is related to the exponential-sphere construction in
+\cite[Figure 7]{cover}; a periodic binary-tree arrangement replicates its
+targets across enough rays to make their number proportional to the order.
+
+\subsection{The base graph}
+Fix $h\ge8$, let $q=2^h$ and $d=\lfloor\log h\rfloor$, and take a full binary
+tree $T$ of depth $d$, rooted at $r$. Write
 \[
- q_y(G_m)=2m+1,\qquad \pmv^+(G_m)\ge m(m-1).
+ \ell=2^d,\quad R=2^{d+1}-1,\quad w=h+R,
 \]
+for its number of leaves, number of vertices, and the required number of rays.
+Choose a proper edge coloring $\chi:E(T)\to\{1,2,3\}$; recursively assign the
+two child edges colors different from the parent-edge color. Put
+\begin{align*}
+ A&=4(q-1),& M&=3d+6,& F&=A+h,& K&=F+M+1,\\
+ t_0&=8\left\lceil\frac{h+M+2}{8}\right\rceil,
+ &s&=A+t_0,&L&=t_0+8q+8M.
+\end{align*}
+Let $k$ be the least power of two at least $w$. Take a full binary hub tree
+with $k$ leaves and root $y$. Attach a length-$L$ ray to each of $w$ distinct
+hub leaves, indexed from level $1$ beyond its hub leaf. Name the rays
+$P_0,\ldots,P_{h-1}$ and $U_u$ for $u\in V(T)$, with $P_h=U_r$.
+Define
+\[
+ \delta_i=4\cdot2^{h-i},\qquad C_0=\{s\},\qquad
+ C_i=\{c-\delta_i,c+\delta_i:c\in C_{i-1}\}.
+\]
+The last set is
+\begin{equation}\label{eq:centers}
+ C_h=\{t_0+8j:0\le j<q\}.
+\end{equation}
+Add precisely the edges
+\begin{align}
+ P_{i-1,t}P_{i,t}&\quad(1\le i\le h,\ t\in C_i),\label{eq:dyadicedges}\\
+ U_{u,t}U_{v,t}&\quad(uv\in E(T),\ 1\le t\le L,\ t-t_0\equiv\chi(uv)\pmod8).\label{eq:treeedges}
+\end{align}
+Call this graph $B^{(h)}$ and choose $x=P_{0,s}$.
+
+The sets $C_i$ and $C_{i+1}$ are disjoint: their elements have different
+residues modulo $2\delta_{i+1}$. Thus an intermediate generator ray receives
+at most one extra edge at each vertex. At $U_r$ the incoming dyadic edges
+have residue $0$ modulo $8$, whereas the tree edges have residues $1,2,3$.
+Proper edge coloring gives the same separation at every other $U$-ray.
+The added edges avoid the ray endpoints, since $t_0\ge2$ and $L\equiv0\pmod8$
+lies beyond all dyadic centers. Hence the maximum degree is three, the root
+has degree two, and there are exactly $k$ leaves, including unused hub leaves.
+
+Every added edge preserves ray level. The hub-root paths, extended along
+their attached rays, remain geodesics and cover the graph. The $k$ leaves
+form a $y$-position set, so
+\begin{equation}\label{eq:baseorder}
+ p_y(B^{(h)})=k,\qquad N_h=|V(B^{(h)})|=2k-1+wL=\Theta(h2^h).
+\end{equation}
+Here $h/2\le\ell\le h$, $w=\Theta(h)$, $k=\Theta(h)$ and $L=\Theta(2^h)$.
+
+\subsection{Distances and the target antichain}
+Let $H$ be the subgraph formed by the $U$-rays and
+\eqref{eq:treeedges}, and let $C=\{U_{r,t}:t\in C_h\}$. Put
+\[
+ F_i=\sum_{j=1}^i(\delta_j+1),\qquad F_0=0,\qquad F_h=F.
+\]
+Define the potential
+\begin{equation}\label{eq:potential}
+ f(v)=
+ \begin{cases}
+ K,&v\text{ in the hub tree},\\
+ \min\{K,F_i+\dist(t,C_i)\},&v=P_{i,t},\ 0\le i<h,\\
+ \min\{K,F+d_H(C,v)\},&v\in V(H).
+ \end{cases}
+\end{equation}
+It is $1$-Lipschitz on every edge. On rays and within $H$ this follows from
+distance-to-a-set inequalities. On the root ray of $H$,
+$d_H(C,U_{r,t})=\dist(t,C_h)$, since the level coordinate is $1$-Lipschitz
+and the root ray realizes this lower bound. At a dyadic edge at level
+$t\in C_i$, the nearest point of $C_{i-1}$ is at distance $\delta_i$;
+the untruncated values on its two endpoints are $F_i-1$ and $F_i$.
+To see the nearest-center assertion, centers in $C_{i-1}$ are separated
+by at least $4\delta_i$, while each new center is $\delta_i$ from its parent.
+Finally, the first vertex of generator ray $i$ has untruncated value
+$s+i-1\ge K$, and the first vertex of a ray of $H$ has value at least
+$F+t_0-1\ge K$. Thus edges to the hub also satisfy the bound.
+
+Since $f(x)=0$, distances from $x$ are at least $f$. Inductively follow a
+ray by $\delta_i$ steps from a parent center and cross one dyadic edge.
+This gives length $F_i$ paths to all centers of $C_i$, and therefore
+\begin{equation}\label{eq:centerdist}
+ d(x,P_{i,t})=F_i\quad(t\in C_i),\qquad d(x,c)=F\quad(c\in C).
+\end{equation}
+
+Consider the finite quotient $Q=V(T)\times\Z_8$, with a cycle on each
+$u$-fiber and the edge $(u,\chi(uv))(v,\chi(uv))$ for each $uv\in E(T)$.
+For a leaf $u$ of $T$ let $c_u=d_Q((r,0),(u,0))$. Following its tree path,
+using at most three cycle steps initially and finally and at most two
+between successive edge colors, gives
+\[
+ c_u\le3+d+2(d-1)+3=3d+4<M.
+\]
+Set $m_0=\lceil M/8\rceil$ and $J=\{m_0,\ldots,q-1-m_0\}$. Then
+\begin{equation}\label{eq:periodicdistance}
+ d_H(C,U_{u,t_0+8j})=c_u\qquad(u\text{ a leaf},\ j\in J).
+\end{equation}
+Projection to $Q$ proves the lower bound. For the upper bound, lift a shortest
+quotient path backwards from the indicated target. Its length is less than
+$M$, so every lifted level differs from the target level by less than $M$.
+The root-ray endpoint has residue $0$ and, by the margins defining $J$, lies
+between $t_0$ and $t_0+8(q-1)$; hence it belongs to $C$. The same margins and
+the padding in $L$ keep the entire lift inside $H$.
+
+Combining \eqref{eq:potential}--\eqref{eq:periodicdistance} yields
+\[
+ d(x,U_{u,t_0+8j})=F+c_u<K.
+\]
+Let $S$ consist of all these targets. Targets on the same leaf ray have
+equal $x$-distance. A geodesic to a target cannot meet the hub, where the
+potential is $K$. Away from the hub, any visit to a different leaf ray must
+enter and leave via its parent ray. If the entry and exit levels are $t,t'$,
+the excursion has length at least $|t-t'|+2$ and can be shortened to the
+parent-ray segment of length $|t-t'|$. Thus such a visit cannot occur in a
+geodesic. It follows that $S$ is an $x$-position set.
+
+For $h\ge8$, $m_0\le(3\log h+13)/8\le2^{h-2}$: the second inequality holds
+at $h=8$ and its right side doubles at each step whereas the left side grows
+by less than one. Consequently
+\begin{equation}\label{eq:targetsize}
+ |S|=\ell(q-2m_0)\ge\frac{hq}{4}.
+\end{equation}
+
+\subsection{Cubic completion and every sufficiently large order}
+The following operation will preserve the target antichain.
+\begin{lemma}\label{lem:cubic}
+Let $B$ be a connected subcubic graph with a degree-two root $y$, exactly $k$
+leaves, and a cover by $k$ geodesics from $y$ to those leaves. There is a
+connected cubic graph $C(B)$ of order $2|V(B)|+4k$ containing an isometric
+copy of $B$ and satisfying $p_{y^0}(C(B))\le3k$.
+\end{lemma}
+\begin{proof}
+Take copies $B^0,B^1$. At every degree-two vertex add $v^0v^1$. At a leaf
+$u$, add a fresh four-cycle $c_0c_1c_2c_3c_0$, joining $u^0$ to $c_0,c_1$
+and $u^1$ to $c_2,c_3$. Every vertex now has degree three, and $y^0y^1$
+connects the copies. Projection to $B$, collapsing each cycle to its leaf,
+sends edges to edges or stationary steps. Thus each old copy is isometric.
+
+Write $\lambda(v)=d_B(y,v)$. Distances from $y^0$ to $v^0,v^1$ are
+$\lambda(v),\lambda(v)+1$. The first is isometry. For the second, a path
+must switch copies, introducing at least one stationary step under projection,
+while the root edge followed by a copy-one geodesic attains the bound.
+At a leaf $u$ the four cycle distances are
+$\lambda(u)+1,\lambda(u)+1,\lambda(u)+2,\lambda(u)+2$.
+For each rooted leaf geodesic use three paths: its copy-zero version extended
+by $c_0,c_3$; its copy-zero version extended by $c_1,c_2$; and $y^0y^1$
+followed by its copy-one version. The distance formulas make all three
+geodesics, and these $3k$ paths cover $C(B)$.
+\end{proof}
+
+Apply the lemma to $B^{(h)}$. Isometry preserves both observer distances
+and pairwise distances, and hence preserves $S$ as a position set in copy zero.
+The resulting graph $C^{(h)}$ has
+\begin{equation}\label{eq:cubicorder}
+ n_h=2N_h+4k=2wL+8k-2=\Theta(h2^h),\qquad
+ \rho(C^{(h)})\ge\frac{\ell(q-2m_0)}{3k}=\Omega(2^h).
+\end{equation}
+The formulas for $N_h$ and $n_h$ increase with $h$; their two-sided
+$\Theta(h2^h)$ estimates give bounded consecutive ratios. Extending a single ray beyond
+all its attachments by $t$ vertices leaves old distances, the number of leaves,
+and the size of the rooted geodesic cover unchanged. It adds $t$ vertices
+to the base and $2t$ vertices to its cubic completion. Given any sufficiently
+large $n$, choose the largest base order $N_h\le n$ and pad to $n$.
+For an even $n$, choose the largest cubic order $n_h\le n$ and pad the base
+by $(n-n_h)/2$. Bounded consecutive ratios keep the number of targets
+proportional to $n$, while the cover size is $O(\log n)$.
+This proves the lower bounds in the first two lines of Theorem~\ref{thm:main};
+Corollary~\ref{cor:upper} proves their upper bounds.
+
+For instance, $h=10$ gives $q=1024$, $d=3$, $\ell=8$, $w=25$, $k=32$,
+$M=15$, $t_0=32$, and $L=8344$. Thus
+\begin{equation}\label{eq:concrete}
+ |V(C^{(10)})|=417454,\qquad \vp(C^{(10)})\ge8160,\qquad
+ \vpm(C^{(10)})\le96,\qquad \rho(C^{(10)})\ge85.
+\end{equation}
+
+\subsection{Maximum degree exactly \texorpdfstring{$\Delta$}{Delta}}
+Thankachy et al.\ \cite[Theorem 2.9]{position} prove
+$a\ge\lceil(\Delta+1)/3\rceil$. Indeed, from any observer the closed
+neighborhood of a maximum-degree vertex lies in three consecutive distance
+layers; one is large enough to give the bound (if the observer is that
+vertex, use its neighborhood). Together with \eqref{eq:universal}, this gives
+\[
+ \rho(G)\le\min\left\{\frac{3n}{\Delta+1},\frac{4n}{\log n}\right\}
+        \le\frac{7n}{\Delta+1+\log n}.
+\]
+The final inequality follows by adding the two resulting lower bounds on
+$1/\rho$ with weights $3/7$ and $4/7$.
+
+For $3\le\Delta\le n/2$, take a padded base construction of order
+$N=n-(\Delta-2)\ge n/2$ and attach $\Delta-2$ new leaves at its degree-two
+root. Its maximum degree is exactly $\Delta$, old distances are preserved,
+and its root cover has $k+\Delta-2=O(\log n+\Delta)$ paths. The old target
+set has size $\Omega(N)=\Omega(n)$, with absolute constants. For
+$\Delta>n/2$, the quantity $n/(\Delta+\log n)$ is bounded above and below
+by absolute positive constants. A star with $\Delta$ leaves, with one edge
+subdivided to obtain order $n$, has the required degree and ratio at least
+one. This completes the degree statement.
+
+\section{Realizable pairs}
+If $p_y=1$, Lemma~\ref{lem:rootcover} gives a spanning geodesic. Any extra
+edge would shortcut it, so the graph is a path. Conversely, a path endpoint
+has value one. Thus the first row consists of $(1,1)$, attained by $K_1,K_2$,
+and $(1,2)$, attained by every longer path, as in
+\cite[Corollary 2.7]{position}.
+
+\subsection{The exact second row}
+\begin{proposition}\label{prop:ten}
+If $\vpm(G)=2$, then $\vp(G)\le10$.
 \end{proposition}
 \begin{proof}
-Let $w$ be the universal vertex of $F_n$, and label its path
-$v_1,\ldots,v_n$. Every induced $w,v_i$-path is the single edge,
-so $m_w=n$. At a path vertex $v_t$, at most one selected path vertex
-can lie strictly on each side of $v_t$: the intervening path segment
-is induced, and two on the same side violate the local condition.
-The only additional possible selected vertex is $w$. Thus
-$m_{v_t}\le3$, and $m_{v_1},m_{v_n}\le2$. The neighborhood of any
-observer is always a local monophonic position set, since an induced
-path between adjacent endpoints must be their edge. Hence endpoints
-have value two and internal path vertices have value three. Together
-with $m_w=n$, this proves the asserted extrema, including $n=2$.
+Choose $y$ with $p_y=2$ and cover the graph by two $y$-geodesics $P,Q$,
+indexed by distance from $y$. They may share vertices. Put the observer at
+$x=P_r$, interchanging the paths if necessary. Since $P$ is isometric,
+$d(x,P_i)=|i-r|$, so an $x$-position set contains at most two vertices of $P$.
 
-In $G_m$, every $y$-geodesic is the unique ray path, as proved in
-Proposition~\ref{prop:original}. Consequently two selected vertices
-on one ray cannot be locally visible from $y$, and the ray endpoints
-give $q_y=2m+1$. The $m(m-1)$ targets on the sphere about $x$ are
-locally visible from $x$: every shortest path to a target has all
-internal vertices at smaller distance, so it avoids all other
-targets. The resulting lower ratio bound is again
-$m(m-1)/(2m+1)$.
+A contact is a shared vertex $P_i=Q_j$, of cost $\epsilon=0$, or an edge
+$P_iQ_j$, of cost $\epsilon=1$. Shared vertices have $i=j$ and edges have
+$|i-j|\le1$. Taking the last visit to $P$ in a shortest path gives
+\begin{equation}\label{eq:contact}
+ d(x,Q_t)=\min_{(i,j,\epsilon)}\{|i-r|+\epsilon+|t-j|\}.
+\end{equation}
+After its last visit the path lies in $Q$; no chord between nonconsecutive
+vertices of $Q$ is possible because $Q$ is isometric. Conversely every
+expression in \eqref{eq:contact} is the length of a walk. Write
+\[
+ |i-r|+\epsilon=|j-r|+c,\qquad c\in\{0,1,2\}.
+\]
+Separate contacts into $j\le r$ and $j\ge r$, assigning equality to one
+group, and let $f_-,f_+$ be their lower envelopes. For a nonempty left group
+let $J$ be its largest contact index. When $t\le J$,
+\[
+ f_-(t)=r-t+g(t),\qquad g(t)\in\{0,1,2\}.
+\]
+The lower bound is termwise and the contact at $J$ gives the upper bound.
+Two selected vertices assigned to this envelope with the same $g$-value
+are comparable along $Q$. There are at most three such selected vertices
+with $t\le J$. For $t>J$ all terms have slope $+1$, contributing at most
+one more. Reflection gives at most four for the right group as well.
+Assign each selected vertex of $Q\setminus P$ to an envelope attaining
+its actual distance; the comparisons therefore use actual distances.
+There are at most eight selected vertices outside $P$, hence at most ten
+in all.
 \end{proof}
 
-If one counts the observer in local mutual visibility, it can be
-adjoined freely, adding one to every $q_x$. The same family then gives
-the lower ratio bound $(m(m-1)+1)/(2m+2)$, so the unboundedness conclusion
-is independent of this counting convention.
-
-\section{Realizable pairs}\label{sec:pairs}
-Necessarily $1\le a\le b$ when $a=\vp^-(G)$ and $b=\vp(G)$.
-By \cite[Corollary 2.7]{vp}, $a=1$ holds precisely for paths.
-Consequently the pairs with $a=1$ are exactly $(1,1)$ and $(1,2)$,
-represented by $K_1$ or $K_2$, and $P_3$, respectively.
-Every diagonal pair $(a,a)$ is realized by $K_{a+1}$.
-
-\begin{samepage}
-Thankachy~et~al.\ \cite[Lemma 2.3]{vp} also give the exact pairs
-$(a,6a-4)$ for every $a\ge3$. The following construction realizes
-a full interval of values for each $a\ge2$.
-\end{samepage}
-
-\begin{theorem}\label{thm:pairs}
-Every pair of integers $a\ge2$, $a\le b\le3a-1$ is realized by a
-connected graph with $\vp^-=a$ and $\vp=b$.
-\end{theorem}
+For explicit realizations we also need a bound that counts contacts.
+\begin{lemma}\label{lem:rungs}
+A graph made of two paths sharing just their root and $s$ additional rungs,
+each joining positive levels differing by at most one, satisfies $p_x\le s+4$
+for every observer $x$.
+\end{lemma}
 \begin{proof}
-It remains to handle $a+1\le b\le3a-1$. Choose positive integers
-$r,t\le a$ with $r+t=b+1-a$. Take a vertex $y$, independent sets
-$A,D$ of sizes $r,t$, and a clique $B$ of size $a$. Put in all edges
-between $y$ and $A$, between $A$ and $B$, and between $B$ and $D$,
-and no other edges. The graph has $b+2$ vertices.
-
-From $y$, the distance layers are $A,B,D$; every vertex in an
-earlier layer lies on a geodesic to every vertex in a later layer.
-Thus $p_y=\max\{r,a,t\}=a$. From a vertex of $A$, the layers are
-$\{y\}\cup B$ and $(A\setminus\{u\})\cup D$. A selected vertex
-of $B$ forbids the entire second layer; $y$ forbids $A\setminus\{u\}$
-but is incomparable with $D$. Hence
+Use \eqref{eq:contact} with $x=P_r$. Suppose $q$ rungs are assigned to the
+left group. If $q>0$, any one dominates the root contact on positive
+$Q$-indices, because its offset is at most two and its level is at least one.
+For these rungs
 \[
- p_u=\max\{a+1,r+t-1,t+1\}\quad(u\in A).
+ g(t)=f_-(t)+t-r=\min_j\{c_j+2\max(t-j,0)\}.
 \]
-From $u\in D$, the layers are $B$, $A\cup(D\setminus\{u\})$,
-and $\{y\}$. Selecting a vertex of $B$ forbids both later layers;
-in their union, $y$ forbids $A$ and is incomparable with
-$D\setminus\{u\}$. Therefore
-\[
- p_u=\max\{a,r+t-1,t\}=\max\{a,r+t-1\}\quad(u\in D).
-\]
-Finally, from $u\in B$, all other vertices except $y$ are neighbors.
-The second-layer vertex $y$ is comparable precisely with $A$.
-Thus
-\[
- p_u=\max\{r+a-1+t,a+t\}=b\quad(u\in B).
-\]
-The formulas exhibit all extremal choices and exclude larger ones.
-All four displayed values lie between $a$ and $b$, with $a$ attained
-at $y$ and $b$ attained in $B$.
+Up to their last contact index $J$, $g(t)\in\{0,1,2\}$ and every attained
+value is one of the offsets $c_j$: values zero and one require that offset;
+if no offset is two, the last contact bounds $g\le1$ throughout this range.
+There are thus at most $q$ selected vertices before or at $J$, and one in
+the final slope-$+1$ tail. If $q=0$, the root contact contributes a single
+chain. The reflected right group contributes at most its number of rungs
+plus one (or zero if it is empty). The other ray therefore contributes at
+most $s+2$, and the observer's ray at most two.
 \end{proof}
 
-The region in Theorem~\ref{thm:pairs} is not a necessary condition.
-An explicit nine-vertex graph has $(\vp^-,\vp)=(2,6)$. On
-$V=\{0,\ldots,8\}$ take the edge set
+Take two length-$13$ paths with common root $P_0=Q_0=y$ and define
 \[
- \{05,06,07,15,17,26,28,37,38,48,57,68\}.
+\begin{array}{lll}
+ e_1=P_4Q_5,&e_2=P_3Q_3,&e_3=P_2Q_1,\\
+ e_4=P_{10}Q_9,&e_5=P_{11}Q_{11},&e_6=P_{12}Q_{13}.
+\end{array}
 \]
-Here $uv$ means the edge $\{u,v\}$. The exact values in vertex order are
-\[
- (p_0,\ldots,p_8)=(4,2,3,6,3,3,5,4,4).
-\]
-Exhaustive computation through order nine proves that nine is the
-minimum order for this pair. The minimum orders for $(2,b)$,
-$b=2,3,4,5,6$, are respectively $3,4,5,7,9$.
-Connected cubic graphs additionally realize $(3,9)$ at order 18.
-The complete classification beyond the proved region remains open;
-in particular, these computations do not decide whether $(2,b)$
-is realizable for any $b\ge7$.
-
-\section{Exact finite computations and remaining bounds}\label{sec:computation}
-Handle $K_1$ separately with $p_x(K_1)=1$. For $n\ge2$ and fixed $x$,
-define the geodesic order on $V(G)\setminus\{x\}$ by
-\[
- u\preceq_x v\quad\Longleftrightarrow\quad
- \dist(x,u)+\dist(u,v)=\dist(x,v).
-\]
-This is a partial order: concatenating geodesic equalities and using
-the triangle inequality proves transitivity, and a strict relation
-increases distance from $x$. Its antichains are exactly the
-$x$-position sets that exclude $x$. Dilworth's theorem \cite{dilworth} therefore computes
-$p_x$ as $n-1$ minus a maximum matching in the bipartite graph of
-\emph{all strict comparable pairs}. Using all comparable pairs, rather
-than just graph edges, is essential to this formula. All distances and
-matching decisions use integers. Polynomial-time computability of these
-position parameters was already established in
-\cite[Theorem 5.7 and Corollary 5.8]{vp}.
-Indeed, matching edges concatenate into disjoint directed chains, since
-each vertex has at most one predecessor and successor and strict order
-forbids cycles; a matching of size $s$ gives $n-1-s$ chains. Conversely,
-linking successive vertices in a chain cover gives a matching of size
-$n-1$ minus the number of chains.
-
-For completeness, a maximum matching also gives an antichain of that
-size. Put $N=n-1$ and let the matching size be $s$. Start at every
-unmatched left vertex and traverse unmatched edges left to right and
-matched edges right to left. Write $Z_L,Z_R$ for the reachable vertices
-in the two copies. No unmatched right vertex is reachable, since that
-would give an augmenting path. Every reachable matched left vertex is
-paired with a reachable right vertex, so $|Z_L|-|Z_R|=N-s$.
-Identifying the two copies with their vertex labels gives $Z_R\subseteq
-Z_L$: if $v_R$ is reached from $u_L$ with $u\prec_x v$, either $v_L$
-is unmatched and is a starting vertex, or it is matched to some $w_R$.
-In the latter case $u\prec_x v\prec_x w$ implies the unmatched edge
-$u_Lw_R$, followed by the matched edge $w_Rv_L$.
-Consequently $A=\{v:v_L\in Z_L,\ v_R\notin Z_R\}$ has size $N-s$.
-If $u\prec_x v$ and $u_L$ is reachable, then $v_R$ is reachable:
-their edge is either traversable left to right or is the matched edge
-by which $u_L$ was reached. Thus $A$ is an antichain. Together with
-the chain cover, this proves the matching formula directly.
-
-We generated one representative of each connected graph in the specified
-classes with \texttt{geng} from nauty 2.9.1 \cite{nauty}. Connectivity and
-degree constraints were imposed at generation. Table~\ref{tab:cubic}
-gives every connected cubic order through 20, with no girth,
-bipartiteness or connectivity-strength restriction.
-\begin{table}[ht]
-\centering
-\begin{tabular}{rrrrrrrrrr}
+The following table specifies five graphs and selected sets with observer
+$x=P_7$. The last column lists the corresponding $x$-distances.
+\begin{center}
+\small
+\begin{tabular}{@{}c l l l l@{}}
 \toprule
-Order &4&6&8&10&12&14&16&18&20\\
-Graphs &1&2&5&19&85&509&4,060&41,301&510,489\\
-Maximum ratio &1&1&$4/3$&2&2&$7/3$&$8/3$&3&3\\
+$b$ & Rung indices & Selected on $P$ & Selected $Q$-indices & $Q$-distances\\
+\midrule
+6 & $1,4$ & $y,P_{13}$ & $2,6,8,13$ & $7,5,5,8$\\
+7 & $1,2,4$ & $y,P_{13}$ & $1,4,6,8,13$ & $7,5,5,5,8$\\
+8 & $1,2,3,4$ & $P_1,P_{13}$ & $1,2,4,6,8,13$ & $6,6,5,5,5,8$\\
+9 & $1,2,3,4,5$ & $P_1,P_{13}$ & $1,2,4,6,8,10,13$ & $6,6,5,5,5,5,7$\\
+10 & $1,2,3,4,5,6$ & $P_1,P_{13}$ & $1,2,4,6,8,10,12,13$ & $6,6,5,5,5,5,6,6$\\
 \bottomrule
 \end{tabular}
-\caption{Exact extrema over all connected cubic graphs at each order.}
-\label{tab:cubic}
-\end{table}
+\end{center}
+These graphs are connected and subcubic, with 27 vertices and $s=b-4$
+rungs, so Lemma~\ref{lem:rungs} gives $\vp\le b$. Formula~\eqref{eq:contact}
+gives the displayed distances. Successive selected $Q$-indices have absolute
+distance-value difference strictly smaller than their index difference.
+By the triangle inequality the same is true for any pair, so the selected
+$Q$-vertices are incomparable. The selected $P_1,P_{13}$ have distance six,
+and $y$ has distance seven. Cross-ray differences are at most one, except
+for $y$ against a distance-five vertex and $P_1$ or $P_{13}$ against $Q_{13}$
+of distance eight. The former pairs have level separation at least four.
+In the latter cases $d(P_{13},Q_{13})=8$, by the closest rung $e_4$, while
+$P_1,Q_{13}$ have level separation twelve. All remaining pairs with distance
+difference one are nonadjacent. Thus all cross-ray comparisons are strict,
+and each displayed set is a position set of size $b$.
 
-There are 273,193 connected graphs of orders one through nine in the
-second search, and 2,571 connected graphs of maximum degree at most
-three of orders one through ten in the third. Their exact maximum
-ratios by order are, respectively,
+Both rays are still $y$-geodesics, so $p_y\le2$. The graphs contain cycles,
+so the first-row characterization gives $\vpm\ge2$. They realize exactly
+$(2,b)$ for $6\le b\le10$. The next proposition supplies $b=2,3,4,5$;
+Proposition~\ref{prop:ten} excludes every larger value.
+
+\subsection{Intervals and exponential row growth}
+\begin{proposition}\label{prop:interval}
+Every integer pair $a\ge2$, $a\le b\le3a-1$ is realizable.
+\end{proposition}
+\begin{proof}
+For $b=a$ use $K_{a+1}$. Otherwise choose $1\le r,t\le a$ with
+$r+t=b+1-a$; this is possible because $2\le b+1-a\le2a$.
+Take a vertex $y$, independent sets $A,D$ of sizes $r,t$, and a clique $B$
+of size $a$. Add all edges from $y$ to $A$, from $A$ to $B$, and from $B$
+to $D$, with no others. The graph has $b+2$ vertices. Its position numbers are
 \[
- (1,1,2,2,2,2,5/2,5/2,3),\qquad
- (1,1,2,2,2,2,2,5/2,5/2,5/2).
+\begin{array}{ll}
+ p_y=a,&p_u=\max\{a+1,r+t-1,t+1\}\quad(u\in A),\\
+ p_u=\max\{a,r+t-1\}\quad(u\in D),&p_u=\max\{r+a-1+t,a+t\}=b\quad(u\in B).
+\end{array}
 \]
-The data record every $p_x$, every pair frequency and explicit graph
-witnesses. A fresh enumeration reproduces every graph6 input.
-An independent exact antichain search recomputes all 832,235 graph
-records and all 13,496,353 observer values, without using matching.
-The tree formula holds on all 81 subcubic trees of orders three
-through ten. Exhaustive subsets, induced-path enumeration, and
-reachability in the shortest-path directed acyclic graph check the
-two local variants on all 142 nontrivial connected graphs through
-order six and fans with $2\le n\le10$.
+For completeness, from $y$ the layers are $A,B,D$, and every earlier-layer
+vertex is comparable with every later-layer vertex. From $u\in A$ the layers
+are $\{y\}\cup B$ and $(A\setminus\{u\})\cup D$. A selected vertex of $B$
+forbids the second layer, whereas $y$ forbids $A\setminus\{u\}$ but allows
+$D$. From $u\in D$ the layers are $B$, $A\cup(D\setminus\{u\})$, and $\{y\}$;
+a vertex of $B$ forbids later layers, and $y$ forbids $A$. From $u\in B$
+the only nonneighbor is $y$, comparable precisely with $A$. These observations
+give both the upper bounds and attaining choices in the displayed formulas.
+All values lie between $a$ and $b$, with both attained.
+\end{proof}
 
-The construction checks verify every edge of the Lipschitz functions,
-every geodesic in the stated covers, and every selected sphere vertex
-for $2\le m\le12$, with additional cubic checks at $m=20,40$.
-For example, $C_{40}$ has 427,670 vertices, a sphere containing
-1,600 selected vertices, and a cover by 384 root geodesics; its ratio
-is therefore at least $25/6$. These are certified lower and upper
-bounds for the two parameters, not computed equalities for those
-large graphs. The realization formulas are checked exactly for every
-$1\le r,t\le a$ with $2\le a\le15$, together with the diagonal
-examples for $1\le a\le30$.
+The known pairs $(a,6a-4)$ for $a\ge3$ are due to
+\cite[Lemma 2.3]{position}. The exponential lower bound in
+\eqref{eq:Ba} has an exact lower parameter, as follows. Set $h=a-1$, take
+$a$ rays $P_0,\ldots,P_h$ attached directly to a common root $y$, and use
+only the dyadic edges \eqref{eq:dyadicedges}. Put
+\[
+ A=4(2^h-1),\quad t_0=h+2,\quad s=A+t_0,\quad F=A+h,
+\]
+and give all rays length $L>s+A$. Define $C_i$ as before, and let
+$x=P_{0,s}$. The potential equal to $F+1$ at $y$ and
+$\min\{F+1,F_i+\dist(t,C_i)\}$ on ray $i$ is $1$-Lipschitz:
+at its first vertex the untruncated value is $s+i-1=F+1+i$.
+The paths used in \eqref{eq:centerdist} show that the $2^h$ centers on $P_h$
+all have $x$-distance $F$.
 
-The proofs settle boundedness for each fixed maximum-degree class and
-both local variants. The quantitative cubic growth rate and the full
-pair classification are the remaining questions. In particular, a
-finite maximum of three through cubic order 20 does not imply an
-all-order upper bound of three.
+Attach one further leaf $z$ at $y$. The graph has $a+1$ leaves, so every
+observer can select at least $a$ other leaves. On the other hand the $a$
+paths from $z$ through $y$ along the rays are geodesics and cover the graph;
+their lengths are certified by the original level function shifted by one.
+Thus $p_z=a$ and $\vpm=a$. The old target sphere is preserved. This proves
+$B(a)\ge2^{a-1}$, while \eqref{eq:universal} proves the upper bound and the
+existence of the maximum, since each row is nonempty and bounded in the
+integers. Therefore $B(a)=2^{\Theta(a)}$.
+
+\section{Local monophonic position and vertex visibility}
+An induced path is also called a monophonic path. For $|V(G)|\ge2$, let
+$m_x$ be the largest size of $S\subseteq V(G)\setminus\{x\}$ such that no
+induced $x,v$-path contains another vertex of $S$, for any $v\in S$.
+This localizes the universal induced-path condition of monophonic position
+\cite{monophonic}. For the fan $K_1\vee P_n$ with universal vertex $w$,
+$m_w=n$: every induced path from $w$ to a path vertex is its edge.
+At a path vertex at most one selected path vertex lies on either side;
+the only other candidate is $w$. Its neighborhood is an admissible set,
+so path endpoints have value two and internal path vertices have value
+three. Hence $\min_xm_x=2$, $\max_xm_x=n$ for $n\ge2$.
+
+The existential shortest-path version already has standard terminology.
+Following Roy--Di Stefano--Klav\v{z}ar--Lakshmanan
+\cite{visibility}, an $x$-visibility set is a set
+$S\subseteq V(G)\setminus\{x\}$ for which every $v\in S$ has some shortest
+$x,v$-path meeting $S$ just at $v$. Its largest size is $v_x(G)$, and
+$\vv(G)=\max_xv_x(G)$ is the vertex visibility number. We write
+$\vvm(G)=\min_xv_x(G)$ for the minimum over observers. This condition does
+not impose mutual visibility between two selected vertices.
+
+\begin{proposition}\label{prop:visibility}
+There is a connected cubic graph $D_t$ of order $4t+2$, for every $t\ge1$,
+such that $\vv(D_t)/\vvm(D_t)\ge t/7$. Thus vertex-visibility ratios have
+linear growth along a cubic family.
+\end{proposition}
+\begin{proof}
+Start with two length-$t$ paths $P,Q$ sharing only their root $y$ and add
+the rungs $P_iQ_i$ for $1\le i\le t$. Call the graph $L_t$.
+Its root geodesics are the unique ray paths, so $v_y(L_t)=2$.
+From $x=P_1$, the set $\{Q_1,\ldots,Q_t\}$ is visible: the paths
+$P_1P_2\cdots P_iQ_i$ have length $i$, are shortest, and contain no other
+selected vertex. The lower bound on length follows either by using a rung
+(at least $i-1$ level-changing steps and one rung) or by going through $y$
+(at least $i+1$ steps).
+
+Take two copies of $L_t$ and join corresponding vertices $y,P_t,Q_t$.
+These are exactly the degree-two vertices, so the result $D_t$ is cubic
+of order $4t+2$ and is connected. Projection makes either copy isometric,
+so the same target set is visible from $P_1^0$. From $y^0$, the geodesics
+to $P_i^0,Q_i^0$ are unique. For $i<t$, those to $P_i^1,Q_i^1$ are also
+unique: the root edge followed by the ray has length $i+1$, whereas entering
+through an end edge costs at least $2t-i+1>i+1$. No rung can occur on these
+root geodesics because it does not increase level.
+
+Partition all nonobserver vertices into the four ray chains
+$\{P_i^0\}_{1\le i\le t}$, $\{Q_i^0\}_{1\le i\le t}$,
+$\{P_i^1\}_{1\le i<t}$, $\{Q_i^1\}_{1\le i<t}$, and the three singletons
+$y^1,P_t^1,Q_t^1$. A visibility set meets each unique-geodesic chain in at
+most one vertex. Hence $v_{y^0}(D_t)\le7$ and the claimed ratio follows.
+The general upper bound $\vv/\vvm\le |V(G)|-1$ gives the matching order
+along this family.
+\end{proof}
+
+\section{Exact checks and the remaining pair problem}
+The proofs above establish the all-parameter statements. Exact finite checks
+provide separate verification of the constructions. For each observer, the
+geodesic order gives
+\[
+ p_x(G)=|V(G)|-1-\nu_x,
+\]
+where $\nu_x$ is the maximum matching size in the bipartite graph of all
+strict comparable pairs. Indeed a chain partition gives such a matching by
+linking successive vertices, and matching edges concatenate into disjoint
+chains because strict order has no directed cycles; Dilworth's theorem
+identifies their minimum number with the maximum antichain size.
+All strict comparable pairs are necessary in this reduction, not just the
+edges of $G$. Polynomial-time computability was established in
+\cite[Theorem 5.7 and Corollary 5.8]{position}.
+
+Matching and an independent recursive maximum-antichain search agree on
+every observer in the five 27-vertex witnesses, all 1,834 two-ray graphs with
+each ray of length one through four and every subset of allowed rungs, and
+all 27,476 connected labeled graphs of orders one through six (164,031
+observer values in the last collection). The two-ray upper bounds also hold
+in 400 further sampled graphs with ray lengths five through fifteen.
+The nine-vertex graph with edges
+\[
+ \{05,06,07,15,17,26,28,37,38,48,57,68\}
+\]
+has the independently recomputed vector
+$(4,2,3,6,3,3,5,4,4)$ and hence pair $(2,6)$.
+
+For the large constructions, breadth-first searches verify every potential
+edge inequality, every specified center distance, every quotient distance
+at a selected target, and every rooted covering path for $h=8,9,10$, as well
+as a padded $h=8$ example. Antichain verification uses the shortest-path
+directed acyclic graph: propagate a flag forward from selected vertices
+along distance-increasing edges and reject any later selected vertex reached
+by a flag. This checks all pairs implicitly in linear time, including targets
+of different radii. The cubic graphs have orders $101454$, $204158$, $417454$
+and $101488$ in these four checks. The exponential-row constructions are
+checked for $2\le a\le10$, all interval examples for $2\le a\le15$, and the
+visibility construction for $1\le t\le12$ and $t=20,50,100$. These finite
+ranges support the proofs and make no claim of minimum order for witnesses.
+
+The higher pair rows remain open: determine $B(a)$ exactly for $a\ge3$,
+and decide whether every integer between $a$ and $B(a)$ is realizable.
+Neither the exponential bounds nor the interval construction settles these
+questions. Sharp leading constants in the cubic and exact-degree growth
+estimates are also not determined here.
 
 \begin{thebibliography}{9}
-\bibitem{vp}
-M. G. S. Thankachy, E. J. Thomas, U. Chandran S. V., J. Tuite,
+\bibitem{position}
+M.~G.~S. Thankachy, E.~J. Thomas, U. Chandran S.~V., J. Tuite,
 G. Di Stefano and G. Erskine,
 \emph{On the Vertex Position Number of Graphs},
 \href{https://arxiv.org/abs/2209.00359v2}{arXiv:2209.00359v2} (2022).
-Published in Discuss. Math. Graph Theory \textbf{44} (2024), 1169--1188.
-Numbered statements here refer to the cited arXiv version.
-\bibitem{survey}
-U. Chandran S. V., S. Klav\v{z}ar and J. Tuite,
-\emph{The General Position Problem: A Survey},
-\href{https://arxiv.org/abs/2501.19385v5}{arXiv:2501.19385v5} (2026).
-\bibitem{mp}
-E. J. Thomas, U. Chandran S. V., J. Tuite and G. Di Stefano,
-\emph{On monophonic position sets in graphs}, Discrete Appl. Math.
-\textbf{354} (2024), 72--82;
-\href{https://arxiv.org/abs/2012.10330v4}{arXiv:2012.10330v4}.
-\bibitem{mv}
-G. Di Stefano, \emph{Mutual visibility in graphs}, Appl. Math. Comput.
-\textbf{419} (2022), 126850;
-\href{https://arxiv.org/abs/2105.02722v2}{arXiv:2105.02722v2}.
+Numbered statements cited here refer to this version.
+
+\bibitem{cover}
+M. Dumas, F. Foucaud, A. Perez and I. Todinca,
+\emph{On graphs coverable by $k$ shortest paths},
+\href{https://arxiv.org/abs/2206.15088v2}{arXiv:2206.15088v2} (2023).
+
+\bibitem{visibility}
+D. Roy, G. Di Stefano, S. Klav\v{z}ar and A. Lakshmanan S,
+\emph{The vertex visibility number of graphs},
+\href{https://arxiv.org/abs/2510.19452v1}{arXiv:2510.19452v1} (2025).
+
 \bibitem{dilworth}
-R. P. Dilworth, \emph{A decomposition theorem for partially ordered sets},
+R.~P. Dilworth, \emph{A decomposition theorem for partially ordered sets},
 Ann. of Math. (2) \textbf{51} (1950), 161--166.
-\bibitem{nauty}
-B. D. McKay and A. Piperno, \emph{Practical graph isomorphism, II},
-J. Symbolic Comput. \textbf{60} (2014), 94--112.
-Software: \href{https://pallini.di.uniroma1.it/}{nauty and Traces}, version 2.9.1.
+
+\bibitem{monophonic}
+E.~J. Thomas, U. Chandran S.~V., J. Tuite and G. Di Stefano,
+\emph{On monophonic position sets in graphs},
+\href{https://arxiv.org/abs/2012.10330v4}{arXiv:2012.10330v4}.
 \end{thebibliography}
 \end{document}
